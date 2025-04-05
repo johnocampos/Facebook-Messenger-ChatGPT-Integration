@@ -2,7 +2,7 @@ const { URL, URLSearchParams } = require("url");
 const config = require('../config');
 const { ResponseBody } = require('./responseBody');
 const { fetchArtists, fetchLearnMoreInfo } = require('./ArtService');
-const { updateUserMemory, getUserMemory } = require('./service/memoryService'); // ✅ Memory Integration
+const { updateUserMemory, getUserMemory } = require('./memoryService'); // ✅ Memory Integration
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const axios = require("axios");
 const vblPrompt = require('./vblPrompt');
