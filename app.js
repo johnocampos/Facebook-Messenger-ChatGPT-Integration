@@ -4,12 +4,13 @@ const { ResponseService } = require('./service/ResponseServices');
 const cors = require('cors');
 
 const app = express();
-const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+const VERIFY_TOKEN = "vblsecret"; // Hardcoded for webhook verify
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// ✅ Health check route
 app.get("/test", (req, res) => {
   res.json({ message: 'Success' });
 });
@@ -33,7 +34,7 @@ app.get("/webhook", (req, res) => {
   }
 });
 
-// ✅ Webhook POST handler
+// ✅ Facebook Message Event Receiver
 app.post("/webhook", async (req, res) => {
   const body = req.body;
 
