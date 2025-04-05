@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Victorian Beauty Lounge Messenger Chatbot with ChatGPT Integration",
   "main": "app.js",
-  "type": "module",
   "scripts": {
     "start": "node app.js"
   },
