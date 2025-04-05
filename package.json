@@ -1,23 +1,20 @@
 {
-  "name": "classical-art-webhook",
+  "name": "vbl-messenger-bot",
   "version": "1.0.0",
-  "description": "Example Webhook for Facebook Messenger",
+  "description": "Victorian Beauty Lounge Messenger Chatbot with ChatGPT Integration",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon app.js",
-    "setup": "cd service && node response.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "@Saint.Reux",
-  "license": "ISC",
   "dependencies": {
-    "async-fetch-url": "^1.0.2",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
+    "axios": "^1.6.0",
     "node-fetch": "^3.3.2",
-    "nodemon": "^2.0.22",
-    "openai": "^3.3.0",
-    "request": "^2.88.2"
-  }
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "author": "Victorian Beauty Lounge Inc.",
+  "license": "MIT"
 }
