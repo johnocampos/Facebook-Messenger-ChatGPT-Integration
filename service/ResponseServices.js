@@ -2,6 +2,7 @@ const { URL, URLSearchParams } = require("url");
 const config = require('../config');
 const { ResponseBody } = require('./responseBody');
 const { fetchArtists, fetchLearnMoreInfo } = require('./ArtService');
+const { updateUserMemory, getUserMemory } = require('./service/memoryService'); // ✅ Memory Integration
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const axios = require("axios");
 const vblPrompt = require('./vblPrompt');
@@ -24,7 +25,23 @@ class ResponseService {
 
                 else if (message.message && message.message.text) {
                     const userMessage = message.message.text;
-                    const aiReply = await this.getChatGptReply(userMessage);
+                    const userMemory = getUserMemory(senderId);
+
+                    // ✅ Personalized greeting for returning users
+                    if (userMemory && userMemory.name) {
+                        await this.sendGreeting(
+                            senderId,
+                            `Hi ${userMemory.name}! 👋 It’s been a while since we last talked about "${userMemory.lastTopic || 'your beauty goals'}". How have you been?`
+                        );
+                    }
+
+                    // ✅ Update memory
+                    updateUserMemory(senderId, {
+                        lastTopic: 'General Inquiry',
+                        lastMessage: userMessage
+                    });
+
+                    const aiReply = await this.getChatGptReply(userMessage, userMemory);
                     await this.sendGreeting(senderId, aiReply);
                 }
             }
@@ -80,22 +97,31 @@ class ResponseService {
         await this.sendApi(config.urlMesseges, responseBody.uploadImageBody(senderId));
     };
 
-    getChatGptReply = async (userInput) => {
+    getChatGptReply = async (userInput, userMemory = null) => {
         try {
+            const messages = [
+                {
+                    role: "system",
+                    content: vblPrompt
+                },
+                {
+                    role: "user",
+                    content: userInput
+                }
+            ];
+
+            if (userMemory && userMemory.name) {
+                messages.unshift({
+                    role: "system",
+                    content: `User's name is ${userMemory.name}. Their last topic was ${userMemory.lastTopic || 'N/A'}.`
+                });
+            }
+
             const response = await axios.post(
                 "https://api.openai.com/v1/chat/completions",
                 {
-                    model: "gpt-3.5-turbo",
-                    messages: [
-                        {
-                            role: "system",
-                            content: vblPrompt
-                        },
-                        {
-                            role: "user",
-                            content: userInput
-                        }
-                    ]
+                    model: "gpt-4-turbo",
+                    messages: messages
                 },
                 {
                     headers: {
