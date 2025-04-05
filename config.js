@@ -8,7 +8,7 @@ module.exports = {
   accessToken: 'EAAQsM4FJkToBO2qtQqpaxUepfz974pF7YX2bnaWuui3lQB7YNCnHRD7jbLKKNfQiWYl892p2lh28yOTZBuXOcLdum55nwxvWNL8gv0Wb9Omw0f2u1uQHZB3FuQ0HsfZCCQ6a37iChxnH0FkOrE5jIfVXqKEHyny9ov70JnhCcPZBHtVoZCk2uLioxLlLvCSZCZCQvWzdbW3w9ZCeSAZDZD',
 
   // ✅ Your actual OpenAI GPT API Key
-  chatGptKey: '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',
+  chatGptKey: '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',
 
   // Postback payloads
   postbackGetStarted: 'GET_STARTED',
