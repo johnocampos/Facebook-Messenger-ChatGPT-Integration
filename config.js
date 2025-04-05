@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   // Facebook Messenger API Endpoints
   urlProfile: 'https://graph.facebook.com/v17.0/me/messenger_profile',
